@@ -25,3 +25,6 @@
 
 网页端打卡
 * 不保证任何时候都能用：https://sign.lthero.cn/
+
+个人博客
+* https://blog.lthero.cn/2022/09/23/WeLearnAutoSign/
