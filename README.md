@@ -21,3 +21,7 @@
 * 软件httpcanary：点击右上角，找到“搜索”，直接搜索“openId”，注意：只要url是qczj.h5yunban.com的包。一般可以在包名为“qczj.h5yunban.com/qczj-youth-learning/cgi-bin/**user-api/course/last-info”的响应中，找到openId
 
 * 注意：记录openId，因为以后没必要再次抓包！！！
+
+
+网页端打卡
+* 不保证任何时候都能用：https://sign.lthero.cn/
