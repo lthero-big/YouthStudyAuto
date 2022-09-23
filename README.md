@@ -3,8 +3,11 @@
 代码思路：
 
 * 每个微信账号有唯一的openid
+
 * 在每次打开青年大学习网页时，后台会根据openid生成accessToken
+
 * 后续的所有与服务器交互的信息，都需要用accessToken才能拿到
+
 * 只要拿到个人信息，再将个人信息和accessToken提交即可打卡完成
 
 
