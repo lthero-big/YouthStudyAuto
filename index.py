@@ -25,12 +25,12 @@ def getToken(openId):
         Token_raw = getToken.text
         Token = re.findall('[A-Z0-9]{8}[-][A-Z0-9]{4}[-][A-Z0-9]{4}[-][A-Z0-9]{4}[-][A-Z0-9]{12}', Token_raw)[0]
         print('获取Token为:' + Token)
+        accessToken = {
+            'accessToken': Token
+        }
+        return accessToken
     except:
         print('获取Token失败，请检查openId是否正确')
-    accessToken = {
-        'accessToken': Token
-    }
-    return accessToken
 
 
 def getinfo(accessToken):
@@ -46,16 +46,19 @@ def getinfo(accessToken):
         infos: list = userInfo['result']['nodes']
         Faculty = [item['title'] for item in infos]
         print('签到课程为：' + classId, '\n您填写的个人信息为：' + cardNo, '\n您的签到所属组织为：' + str(Faculty))
+        checkinData = {
+            'course': classId,
+            'subOrg': None,
+            'nid': nid,
+            'cardNo': cardNo
+        }
+        return checkinData
     except Exception as e:
+        if "is not subscriptable" in str(e):
+            print("openid出错,无法获得您的信息")
         print(f'获取历史信息失败，请您手动打卡：{e}')
 
-    checkinData = {
-        'course': classId,
-        'subOrg': None,
-        'nid': nid,
-        'cardNo': cardNo
-    }
-    return checkinData
+
 
 
 def signup(accessToken, checkinData):
@@ -80,5 +83,6 @@ if __name__ == "__main__":
         }
         accesstoken = getToken(openid)
         checkindata = getinfo(accesstoken)
-        signup(accesstoken, checkindata)
+        if checkindata is not None:
+            signup(accesstoken, checkindata)
         print('===========================================')
