@@ -13,6 +13,8 @@
 
 ## 使用
 
+运行代码前，需要先获得openid，每个账号只用获得一次openid即可，以后无需重复抓包
+
 ### 安卓获得openId流程
 
 视频教程：https://wwd.lanzouy.com/isVnb0cc5jba 密码:bcg5
