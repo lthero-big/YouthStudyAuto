@@ -11,6 +11,7 @@
 * 只要拿到个人信息，再将个人信息和accessToken提交即可打卡完成
 
 
+## 使用
 
 ### 安卓获得openId流程
 
@@ -44,7 +45,7 @@
 * 点击“同意”后，切换到Fiddler，按“ctrl+f”，搜索openid，双击标黄处的包，并点击“WebForms”，在里面找到openid即可
 
 
-## 使用
+### 运行代码
 
 * 获得openid后，将openid填入config.yml，运行index.py即可。config.yml里面的name用来标识不同的openid，无实际意义。
 
