@@ -24,17 +24,18 @@
 * 软件httpcanary：点击右上角，找到“搜索”，直接搜索“openId”，注意：只要url是qczj.h5yunban.com的包。一般可以在包名为“qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/course/last-info”的响应中，找到openId
 
 * 注意：记录openId，因为以后没必要再次抓包！！！
+   
+   
 
-
-PC获得openid教程
+PC获得openid教程【具体请在https://sign.lthero.cn/  查看PC视频教程】
 
 需要的软件：Fiddler、电脑版微信
 
-1、打开Fiddler，安装证书
+* 打开Fiddler，安装证书
 
-2、切换到微信，点击大学习，此时弹窗需要授权，点击“同意”。
+* 切换到微信，点击大学习，此时弹窗需要授权，点击“同意”。
 
-3、点击“同意”后，切换到Fiddler，按“ctrl+f”，搜索openid，双击标黄处的包，并点击“WebForms”，在里面找到openid即可
+* 点击“同意”后，切换到Fiddler，按“ctrl+f”，搜索openid，双击标黄处的包，并点击“WebForms”，在里面找到openid即可
 
 
 注意：如果没有需要第2步授权步骤，而是直接进入大学习页面，则无法获得openid。
