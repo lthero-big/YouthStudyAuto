@@ -31,7 +31,7 @@
 
 PC获得openid教程【具体请在https://sign.lthero.cn/  查看PC视频教程】
 
-需要的软件：Fiddler、电脑版微信
+* 需要的软件：Fiddler、电脑版微信
 
 * 打开Fiddler，安装证书
 
