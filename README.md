@@ -10,9 +10,11 @@
 
 * 只要拿到个人信息，再将个人信息和accessToken提交即可打卡完成
 
--------------------------------------------------------
+
 
 ## 安卓获得openId流程
+
+视频教程：https://wwd.lanzouy.com/isVnb0cc5jba 密码:bcg5
 
 * 安卓下载抓包软件 httpcanary，安装并打开软件，有三步骤：1、同意条款 2、允许安装证书 3、root可以跳过
 
@@ -27,9 +29,10 @@
 * 注意：记录openId，因为以后没必要再次抓包！！！
    
    
--------------------------------------------------------
+
 
 ## PC获得openid教程
+
 视频教程：https://wwd.lanzouy.com/isVnb0cc5jba 密码:bcg5
 
 * 需要的软件：Fiddler、电脑版微信
@@ -39,6 +42,12 @@
 * 切换到微信，点击大学习，此时弹窗需要授权，点击“同意”。
 
 * 点击“同意”后，切换到Fiddler，按“ctrl+f”，搜索openid，双击标黄处的包，并点击“WebForms”，在里面找到openid即可
+
+
+## 使用
+
+* 获得openid后，将openid填入config.yml，运行index.py即可。config.yml里面的name用来标识不同的openid，无实际意义。
+
 
 -------------------------------------------------------
 
@@ -61,9 +70,4 @@ https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/info?accessToken=
 随后进行访问此链接，可以在返回的结果里面，找到openid
 
 
--------------------------------------------------------
-
-## 使用
-
-* 获得openid后，将openid填入config.yml，运行index.py即可。config.yml里面的name用来标识不同的openid，无实际意义。
 
