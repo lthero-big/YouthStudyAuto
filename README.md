@@ -12,7 +12,7 @@
 
 
 
-## 安卓获得openId流程
+### 安卓获得openId流程
 
 视频教程：https://wwd.lanzouy.com/isVnb0cc5jba 密码:bcg5
 
@@ -31,7 +31,7 @@
    
 
 
-## PC获得openid教程
+### PC获得openid教程
 
 视频教程：https://wwd.lanzouy.com/isVnb0cc5jba 密码:bcg5
 
