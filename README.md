@@ -58,10 +58,7 @@ https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/info?accessToken=
 
 -------------------------------------------------------
 
+## 使用
 
-网页端打卡
-* 不保证任何时候都能用：https://sign.lthero.cn/
--------------------------------------------------------
+* 获得openid后，将openid填入config.yml，运行index.py即可。config.yml里面的name用来标识不同的openid，无实际意义。
 
-个人博客
-* https://blog.lthero.cn/2022/09/23/WeLearnAutoSign/
