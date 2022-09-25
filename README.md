@@ -42,11 +42,15 @@
 
 -------------------------------------------------------
 
-注意：如果没有需要第2步授权步骤，而是直接进入大学习页面，则无法获得openid。
+## 注意
+
+如果没有需要第2步授权步骤，而是直接进入大学习页面，则无法获得openid。
 
 需要彻底关掉微信，并重新打开微信，再尝试。
 
-如果实现得不到openid，需要点击“开始学习”进入到选择省市的选项。再切到Fiddler，按“ctrl+f”，搜索accessToken。得到accessToken后，
+无论手机端或电脑端，如果实现得不到openid，需要点击“开始学习”进入到选择省市的选项。
+
+再切到Fiddler或httpcanary，按“ctrl+f”，搜索accessToken。得到accessToken后，
 
 比如accessToken为xxxx-xxxx-xxxx-xxxx，将其合并到下面的链接
 
