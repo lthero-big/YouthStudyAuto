@@ -15,7 +15,7 @@
 
 运行代码前，需要先获得openid，每个账号只要获得一次openid即可，以后无需重复抓包
 
-### 安卓获得openId流程
+### 安卓获得openId流程【部分手机无法用】
 
 视频教程：https://wwd.lanzouy.com/isVnb0cc5jba 密码:bcg5
 
@@ -34,7 +34,7 @@
    
 
 
-### PC获得openid教程
+### PC获得openid教程【推荐】
 
 视频教程：https://wwd.lanzouy.com/isVnb0cc5jba 密码:bcg5
 
