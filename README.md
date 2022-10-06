@@ -53,7 +53,8 @@
 ### 运行代码
 
 * 需要自行安装re,json,ymal,requests库
-* 获得openid后，将openid填入config.yml，运行index.py即可。config.yml里面的name用来标识不同的openid，无实际意义
+* 获得openid后，将openid填入config.yml，运行index.py即可。
+* config.yml里面的name用来标识不同的openid，无实际意义
 
 
 -------------------------------------------------------
