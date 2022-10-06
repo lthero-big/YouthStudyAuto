@@ -106,6 +106,38 @@ def sendMail(user,info,resStatus):
     requests.post(url='http://邮件接口/', data=params)
     print("邮件发送完成")
 
+# 本地发送邮件，需要自行配置
+def sendMail(to_email, title, content):
+    
+    EMAIL_FROM = 'from@runoob.com'  # 配置发信地址
+    EMAIL_HOST_PASSWORD = "aaabbbbb"  # 密码
+    EMAIL_HOST, EMAIL_PORT = 'smtp.XXX.com', 80
+    
+    # 自定义的回复地址
+    replyto = EMAIL_FROM
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = title
+    msg['From'] = '%s <%s>' % ("发送方名称", EMAIL_FROM)
+    msg['To'] = '%s <%s>' % ("接收方名称", to_email)
+    msg['Reply-to'] = replyto
+    msg['Message-id'] = email.utils.make_msgid()
+    msg['Date'] = email.utils.formatdate()
+    textplain = MIMEText('{}'.format(content), _subtype='plain', _charset='UTF-8')
+    msg.attach(textplain)
+
+    try:
+        client = smtplib.SMTP()
+        client.connect(EMAIL_HOST, EMAIL_PORT)
+        client.set_debuglevel(0)
+        client.login(EMAIL_FROM, EMAIL_HOST_PASSWORD)
+        client.sendmail(EMAIL_FROM, [to_email], msg.as_string())
+        client.quit()
+        return True
+    except Exception as e:
+        error_msg = '邮件发送异常, {}'.format(str(e))
+    print(error_msg)
+    return False
+    
 if __name__ == "__main__":
     config = getYmlConfig()
     for index, eachuser in enumerate(config['users']):
@@ -119,6 +151,9 @@ if __name__ == "__main__":
         if checkindata is not None:
             personalInfo=getPersonalInfo(accesstoken)
             resStatus=signup(accesstoken, checkindata)
+            # 需要自行配置接口
 #             sendMail(eachuser,personalInfo,resStatus)
+            # 需要自行配置发送邮箱
+#             sendMail(eachuser['user']['mail'], "邮件标题", "邮件内容")
         print('===========================================')
 
