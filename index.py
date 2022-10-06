@@ -2,15 +2,19 @@ import re
 import requests
 import json
 import yaml
+import time
+import random
 
 getToken_url = 'https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/login/we-chat/callback'
 getUserInfo_url = 'https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/course/last-info'
 getClass_url = 'https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/common-api/course/current'
 checkin_url = 'https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/course/join'
+getPersonalInfo_url = 'https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/info'
 
 headers = {
     'Content-Type': 'text/plain'
 }
+
 
 def getYmlConfig(yaml_file='config.yml'):
     with open(yaml_file, 'r', encoding='utf-8') as f:
@@ -21,8 +25,8 @@ def getYmlConfig(yaml_file='config.yml'):
 def getToken(openId):
     # 根据openId获得token
     try:
-        getToken = requests.get(url=getToken_url, params=openId, headers=headers)
-        Token_raw = getToken.text
+        token = requests.get(url=getToken_url, params=openId, headers=headers)
+        Token_raw = token.text
         Token = re.findall('[A-Z0-9]{8}[-][A-Z0-9]{4}[-][A-Z0-9]{4}[-][A-Z0-9]{4}[-][A-Z0-9]{12}', Token_raw)[0]
         print('获取Token为:' + Token)
         accessToken = {
@@ -59,8 +63,6 @@ def getinfo(accessToken):
         print(f'获取历史信息失败，请您手动打卡：{e}')
 
 
-
-
 def signup(accessToken, checkinData):
     # 根据token和data完成打卡
     checkin = requests.post(checkin_url, params=accessToken, data=json.dumps(checkinData), headers=headers)
@@ -68,21 +70,55 @@ def signup(accessToken, checkinData):
 
     if result["status"] == 200:
         print("签到成功")
+        return 1
     else:
-        print('出现错误，错误码：' + result["status"])
-        print('错误信息：' + result["message"])
+        print('出现错误，错误码：' + str(result["status"]))
+        print('错误信息：' + str(result["message"]))
+        return result["message"]
 
+
+def getPersonalInfo(accessToken):
+    # 获得个人信息
+    info = requests.get(url=getPersonalInfo_url, params=accessToken, headers=headers).json()
+    print('当前分数 ', info['result']['score'])
+    return info['result']
+    # return info['result']['score']
+
+
+# 调用接口发送邮件，不提供接口
+def sendMail(user,info,resStatus):
+    msg=resStatus
+    if resStatus==1:
+        msg="完成"
+    # 接收方
+    receiver = user['user']['mail']
+    # 内容
+    content = '{updateTime} 您好，{user}!本周大学习打卡：{msg}。当前分数为{score}分'.format(user=info['nickname'],msg=msg,score=info['score'],updateTime=info['lastUpdTime'])
+    params = {
+        'reciever': receiver,
+        # 邮件标题
+        'title': f'[{msg}]青年大学习打卡',
+        # 主要内容
+        'content': content,
+        # 内部大标题
+        'innerTitle': f'青年大学习'
+    }
+    requests.post(url='http://邮件接口/', data=params)
+    print("邮件发送完成")
 
 if __name__ == "__main__":
     config = getYmlConfig()
-    for index, user in enumerate(config['users']):
-        print(user['user']['name'], 'openId为 ', user['user']['openid'])
+    for index, eachuser in enumerate(config['users']):
+        print(eachuser['user']['name'], 'openId为 ', eachuser['user']['openid'])
         openid = {
             'appid': 'wx56b888a1409a2920',
-            'openid': user['user']['openid']
+            'openid': eachuser['user']['openid']
         }
         accesstoken = getToken(openid)
         checkindata = getinfo(accesstoken)
         if checkindata is not None:
-            signup(accesstoken, checkindata)
+            personalInfo=getPersonalInfo(accesstoken)
+            resStatus=signup(accesstoken, checkindata)
+#             sendMail(eachuser,personalInfo,resStatus)
         print('===========================================')
+
