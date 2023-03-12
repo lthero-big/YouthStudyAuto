@@ -1,6 +1,10 @@
-# 浙江青年大学习一键打卡
+# 浙江/上海青年大学习一键打卡
 
 ## 更新内容
+2023.3.12更新：
+感谢吾爱用户：ahov 提供上海大学习接口，具体请查看：https://www.52pojie.cn/forum.php?mod=viewthread&tid=1694872&page=5#pid45902595
+
+上海青年大学习使用：需要将所有的qczj.h5yunban.com/qczj-youth-learning字段修改为qcsh.h5yunban.com/youth-learning字段
 
 ### 邮件发送
 * 在config.yml配置好接收方邮箱
