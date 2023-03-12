@@ -11,7 +11,7 @@
 就需要看下原始的提交页面
 如果你所在的系统有个“请输入所在社区（村）/班级/单位（部门）”（必填项目），如下图所示形式：
 请在41-42行之间添加一行subOrg = userInfo["result"]["subOrg"]
-并将51行修改为'subOrg': subOrg,
+找到'subOrg': None修改为'subOrg': subOrg,
 
 
 ### 邮件发送
