@@ -4,16 +4,6 @@
 2023.3.12更新：
 感谢吾爱用户：ahov 提供上海大学习接口，具体请查看：https://www.52pojie.cn/forum.php?mod=viewthread&tid=1694872&page=5#pid45902595
 
-上海青年大学习使用：需要将所有的qczj.h5yunban.com/qczj-youth-learning字段修改为qcsh.h5yunban.com/youth-learning字段
-如果报错：
-出现错误，错误码400
-错误信息：请输入所在四级组织
-就需要看下原始的提交页面
-如果你所在的系统有个“请输入所在社区（村）/班级/单位（部门）”（必填项目），如下图所示形式：
-请在41-42行之间添加一行subOrg = userInfo["result"]["subOrg"]
-找到'subOrg': None修改为'subOrg': subOrg,
-
-
 ### 邮件发送
 * 在config.yml配置好接收方邮箱
 * 有两个sendMail函数，第一个是使用发送邮件的api，第二个是使用python库发送，没有api的可以使用第二个函数
