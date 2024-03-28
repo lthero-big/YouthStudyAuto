@@ -4,7 +4,7 @@
 
 截止到2024.3.28，脚本依可用
 
-2023.3.12更新： 感谢吾爱用户：ahov 提供上海大学习接口，具体请查看：https://www.52pojie.cn/forum.php?mod=viewthread&tid=1694872&page=5#pid45902595
+2023.3.12更新： 感谢吾爱用户：ahov 提供上海大学习接口，具体请查看[原帖](https://www.52pojie.cn/forum.php?mod=viewthread&tid=1694872&page=5#pid45902595)
 
 目前已经添加上海青年大学习打卡脚本：ShangHaiAuto.py
 
