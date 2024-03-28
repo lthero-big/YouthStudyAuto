@@ -2,8 +2,8 @@ import re
 import requests
 import json
 import yaml
-import time
-import random
+from lxml import etree
+from urllib import request
 
 getToken_url = 'https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/login/we-chat/callback'
 getUserInfo_url = 'https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/course/last-info'
@@ -138,6 +138,20 @@ def sendMail(to_email, title, content):
     print(error_msg)
     return False
     
+def get_screenshot_url():
+    """
+    获取截屏图片的URL。
+
+    :return: 截屏图片的URL。
+    """
+    response = requests.get('https://m.cyol.com/gb/channels/vrGlAKDl/index.html')
+    response_html = etree.HTML(response.text)
+    href_list = response_html.xpath('/html/body/section[1]/div/ul//a/@href')
+    if 'index.html' in href_list[0]:
+        return href_list[0].replace("index.html", "images/end.jpg")
+    elif 'm.html' in href_list[0]:
+        return href_list[0].replace("m.html", "images/end.jpg")
+
 if __name__ == "__main__":
     config = getYmlConfig()
     for index, eachuser in enumerate(config['users']):
@@ -156,4 +170,7 @@ if __name__ == "__main__":
             # 需要自行配置发送邮箱
 #             sendMail(eachuser['user']['mail'], "邮件标题", "邮件内容")
         print('===========================================')
+    
+    request.urlretrieve(get_screenshot_url(), f'./output.jpg')
+
 
