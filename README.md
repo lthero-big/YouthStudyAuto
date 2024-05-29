@@ -146,3 +146,8 @@ https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/info?accessToken=
 替换上面的xxxx-xxxx-xxxx-xxxx。
 
 随后进行访问此链接，可以在**返回的结果里面找到openid**
+
+
+## 常见问题
+
+在ISSUE中可查看
