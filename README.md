@@ -52,13 +52,31 @@
 
 # 运行代码
 
+下载本项目
+### 方法一
+```sh
+wget https://github.com/lthero-big/ZheJiangYouthstudyAutoSign/archive/refs/heads/main.zip
+```
+解压文件
+```
+unzip main.zip
+mv main YouthStudyAuto
+cd YouthStudyAuto
+```
+
+### 方法二
+```sh
+git clone https://github.com/lthero-big/YouthStudyAuto.git
+cd YouthStudyAuto
+```
+
 
 ## 自动运行
-使用目录下的install.sh脚本，自动安装所需环境，并且支持配置打卡时间和签到时间（同步到crontab任务）
+使用install.sh脚本，自动安装所需环境，并且支持配置打卡时间和签到时间（同步到crontab任务）
+
 ```sh
 bash install.sh
 ```
-
 
 
 ## 手动运行
