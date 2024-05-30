@@ -94,16 +94,58 @@ save_weekly_screenshot() {
     echo -e "${GREEN}截图已保存到 $(readlink -f $SCRIPT_DIR/output.jpg)${NC}"
 }
 
-# 函数：更新项目
-update_project() {
-    if [ -d "$SCRIPT_DIR/.git" ]; then
-        cd $SCRIPT_DIR
-        git pull origin main
-        echo -e "${GREEN}项目已更新！${NC}"
+# 函数：检查是否有更新
+check_for_updates() {
+    cd $SCRIPT_DIR
+    git fetch origin main
+    LOCAL=$(git rev-parse HEAD)
+    REMOTE=$(git rev-parse origin/main)
+    if [ $LOCAL != $REMOTE ]; then
+        echo "检测到新版本，是否更新？(y/n)"
+        read answer
+        if [ "$answer" == "y" ]; then
+            git pull origin main
+            echo -e "${GREEN}项目已更新！${NC}"
+        else
+            echo -e "${RED}取消更新。${NC}"
+        fi
     else
-        echo -e "${RED}当前目录不是Git仓库，无法更新项目。${NC}"
+        echo -e "${GREEN}当前已是最新版本。${NC}"
     fi
 }
+
+# 函数：查看config.yml文件
+view_config() {
+    if [ -f "$SCRIPT_DIR/config.yml" ]; then
+        cat "$SCRIPT_DIR/config.yml"
+    else
+        echo -e "${RED}config.yml文件不存在。${NC}"
+    fi
+}
+
+# 函数：添加新用户到config.yml
+add_user() {
+    echo "请输入用户名："
+    read username
+    echo "请输入openid："
+    read openid
+    echo "请输入邮箱："
+    read email
+
+    new_user="
+  - user:
+      name: '$username'
+      openid: '$openid'
+      mail: '$email'"
+
+    if [ -f "$SCRIPT_DIR/config.yml" ]; then
+        echo "$new_user" >> "$SCRIPT_DIR/config.yml"
+        echo -e "${GREEN}新用户已添加到config.yml。${NC}"
+    else
+        echo -e "${RED}config.yml文件不存在。${NC}"
+    fi
+}
+
 
 # 主菜单
 show_menu() {
@@ -113,7 +155,9 @@ show_menu() {
     echo "3. 配置每周大学习打卡时间"
     echo "4. 保存当前周的大学习截图"
     echo "5. 更新项目"
-    echo "6. 退出脚本"
+    echo "6. 查看config.yml文件"
+    echo "7. 添加新用户"
+    echo "8. 退出脚本"
     read choice
 
     case $choice in
@@ -130,9 +174,15 @@ show_menu() {
             save_weekly_screenshot
             ;;
         5)
-            update_project
+            check_for_updates
             ;;
         6)
+            view_config
+            ;;
+        7)
+            add_user
+            ;;
+        8)
             echo "退出脚本。"
             exit 0
             ;;
