@@ -61,7 +61,7 @@ configure_daily_signin_time() {
         echo -e "${RED}输入非法，默认每日签到时间为上午10点。${NC}"
     fi
 
-    cron_job="0 $hour * * * python3 $SCRIPT_DIR/$PYTHON_SCRIPT --daily >> $SCRIPT_DIR/autoStudy.log 2>&1"
+    cron_job="0 $hour * * * cd $SCRIPT_DIR && python3 $SCRIPT_DIR/$PYTHON_SCRIPT --daily >> $SCRIPT_DIR/autoStudy.log 2>&1"
 
     # 检查是否已经存在相同的任务
     (crontab -l 2>/dev/null | grep -F "$cron_job") && echo -e "${GREEN}每日签到任务已存在，不重复添加。${NC}" || (crontab -l 2>/dev/null; echo "$cron_job") | crontab -
@@ -88,7 +88,7 @@ configure_weekly_course_time() {
         echo -e "${RED}输入非法，默认打卡时间为上午10点。${NC}"
     fi
 
-    cron_job="0 $hour * * $day python3 $SCRIPT_DIR/$PYTHON_SCRIPT --course >> $SCRIPT_DIR/autoStudy.log 2>&1"
+    cron_job="0 $hour * * $day cd $SCRIPT_DIR && python3 $SCRIPT_DIR/$PYTHON_SCRIPT --course >> $SCRIPT_DIR/autoStudy.log 2>&1"
 
     # 检查是否已经存在相同的任务
     (crontab -l 2>/dev/null | grep -F "$cron_job") && echo -e "${GREEN}每周大学习打卡任务已存在，不重复添加。${NC}" || (crontab -l 2>/dev/null; echo "$cron_job") | crontab -
