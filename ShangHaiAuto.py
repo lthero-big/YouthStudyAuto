@@ -218,20 +218,20 @@ if __name__ == "__main__":
         screenshot_response = requests.get(screenshot_url)
         with open('./output.jpg', 'wb') as f:
             f.write(screenshot_response.content)
-        echo -e "${GREEN}截图已保存到 $(readlink -f ./output.jpg)${NC}"
+        print(f"{GREEN}截图已保存到 {readlink -f ./output.jpg}{NC}")
     
     if not args.daily and not args.course:
-        echo -e "${RED}错误: 至少需要传入 --daily 或 --course 参数${NC}"
-        echo "使用示例:"
-        echo "每日签到    python index.py --daily"
-        echo "大学习打卡  python index.py --course"
+        print(f"{RED}错误: 至少需要传入 --daily 或 --course 参数{NC}")
+        print("使用示例:")
+        print("每日签到    python index.py --daily")
+        print("大学习打卡  python index.py --course")
         exit(1)
 
     config = getYmlConfig()
     date = datetime.now().strftime("%Y-%m-%d")
-    echo "================$date======================"
+    print(f'================{date}======================')
     for index, eachuser in enumerate(config['users']):
-        echo "${eachuser['user']['name']} openId为 ${eachuser['user']['openid']}"
+        print(eachuser['user']['name'], 'openId为 ', eachuser['user']['openid'])
         openid = {
             'appid': 'wx56b888a1409a2920',
             'openid': eachuser['user']['openid']
@@ -257,7 +257,7 @@ if __name__ == "__main__":
                     elif args.mailType == 'local':
                         sendMailLocal(eachuser, getPersonalInfo(accesstoken), resStatus, "course")
 
-        echo "=================任务结束========================="
+        print("=================任务结束=========================")
         
         t = random.randint(1, 3)
         time.sleep(t)
