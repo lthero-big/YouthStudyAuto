@@ -13,7 +13,7 @@ getUserInfo_url = 'https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-ap
 getClass_url = 'https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/common-api/course/current'
 checkin_url = 'https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/course/join'
 getPersonalInfo_url = 'https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/info'
-signin_url = f"https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/sign-in/records"
+signin_url = "https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/sign-in/records"
 headers = {
     'Content-Type': 'text/plain'
 }
