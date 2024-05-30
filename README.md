@@ -50,16 +50,18 @@
 - 软件httpcanary：点击右上角，找到“搜索”，直接搜索“openId”，注意：只要url是qczj.h5yunban.com的包。一般可以在包名为“qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/course/last-info”的响应中，找到openId
 - 注意：记录openId，因为以后没必要再次抓包！！！
 
-## 运行代码
+# 运行代码
 
 
-### 自动运行
+## 自动运行
 使用目录下的install.sh脚本，自动安装所需环境，并且支持配置打卡时间和签到时间（同步到crontab任务）
 ```sh
 bash install.sh
 ```
 
-### 手动运行
+
+
+## 手动运行
 
 - 需要自行安装 `re`, `json`, `yaml`, `requests`, `beautifulsoup4` 库，命令`pip install -r requirements.txt`
 - 获得**openid**后，将openid填入config.yml，运行index.py即可。
