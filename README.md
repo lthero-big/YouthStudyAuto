@@ -84,6 +84,17 @@ bash install.sh
 - 需要自行安装 `re`, `json`, `yaml`, `requests`, `beautifulsoup4` 库，命令`pip install -r requirements.txt`
 - 获得**openid**后，将openid填入config.yml，运行index.py即可。
 - config.yml里面的name用来标识不同的openid，无实际意义
+```sh
+users:
+  - user:
+      name: 'name1'
+      openid: 'oO-a2t6Z_awwxOby5Y9eO5VL9Rqg'
+      mail: 'aaaa@qq.com'
+  - user:
+      name: 'name2'
+      openid: 'oO-a2t7bkGObaacIOd4U1Bpaf1l0'
+      mail: 'bbbbb@qq.com'
+```
 
 ### 功能参数说明
 
