@@ -11,7 +11,7 @@ NC='\033[0m' # 无颜色
 # 设置默认的Python脚本
 PYTHON_SCRIPT="ZheJiangAuto.py"
 
-# 函数：安装Python3和pip3
+# 函数：安装Python3、pip3 和 yq
 install_dependencies() {
     echo "请输入地区（zj 或 sh），默认为 zj："
     read region
@@ -34,6 +34,13 @@ install_dependencies() {
         echo "pip3 未安装。正在安装 pip3..."
         sudo apt-get update
         sudo apt-get install -y python3-pip
+    fi
+
+    # 检查并安装yq
+    if ! command -v yq &>/dev/null; then
+        echo "yq 未安装。正在安装 yq..."
+        sudo wget https://github.com/mikefarah/yq/releases/download/v4.6.1/yq_linux_amd64 -O /usr/bin/yq
+        sudo chmod +x /usr/bin/yq
     fi
 
     # 安装依赖
@@ -132,20 +139,37 @@ add_user() {
     echo "请输入邮箱："
     read email
 
-    new_user="
-  - user:
-      name: '$username'
-      openid: '$openid'
-      mail: '$email'"
+    new_user="  - user:\n      name: '$username'\n      openid: '$openid'\n      mail: '$email'"
 
     if [ -f "$SCRIPT_DIR/config.yml" ]; then
-        echo "$new_user" >> "$SCRIPT_DIR/config.yml"
+        user_count=$(yq eval '.users | length' "$SCRIPT_DIR/config.yml")
+        if [ "$user_count" -eq 0 ]; then
+            echo -e "users:\n$new_user" > "$SCRIPT_DIR/config.yml"
+        else
+            echo -e "$new_user" >> "$SCRIPT_DIR/config.yml"
+        fi
         echo -e "${GREEN}新用户已添加到config.yml。${NC}"
+    else
+        echo -e "users:\n$new_user" > "$SCRIPT_DIR/config.yml"
+        echo -e "${GREEN}config.yml文件不存在，新建并添加用户。${NC}"
+    fi
+}
+
+# 函数：删除用户
+delete_user() {
+    echo "请输入要删除的用户名："
+    read username
+
+    if [ -f "$SCRIPT_DIR/config.yml" ]; then
+        yq eval "del(.users[] | select(.user.name == \"$username\"))" "$SCRIPT_DIR/config.yml" -i
+        if [ "$(yq eval '.users | length' "$SCRIPT_DIR/config.yml")" -eq 0 ]; then
+            yq eval '.users = []' "$SCRIPT_DIR/config.yml" -i
+        fi
+        echo -e "${GREEN}用户已从config.yml删除。${NC}"
     else
         echo -e "${RED}config.yml文件不存在。${NC}"
     fi
 }
-
 
 # 主菜单
 show_menu() {
@@ -157,7 +181,8 @@ show_menu() {
     echo "5. 更新项目"
     echo "6. 查看config.yml文件"
     echo "7. 添加新用户"
-    echo "8. 退出脚本"
+    echo "8. 删除用户"
+    echo "9. 退出脚本"
     read choice
 
     case $choice in
@@ -183,6 +208,9 @@ show_menu() {
             add_user
             ;;
         8)
+            delete_user
+            ;;
+        9)
             echo "退出脚本。"
             exit 0
             ;;
