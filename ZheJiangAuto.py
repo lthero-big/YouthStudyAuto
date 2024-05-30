@@ -202,10 +202,11 @@ if __name__ == "__main__":
         screenshot_response = requests.get(screenshot_url)
         with open('./output.jpg', 'wb') as f:
             f.write(screenshot_response.content)
-        print("截图保存成功")
+        print("截图保存成功！！！")
     
     if not args.daily and not args.course:
-        print("错误: 至少需要传入 --daily 或 --course 参数")
+        print("！！！提示: 签到或打卡任务未执行！！！")
+        print("提示: 至少需要传入 --daily 或 --course 参数")
         print("使用示例:")
         print("每日签到    python index.py --daily")
         print("大学习打卡  python index.py --course")
