@@ -150,4 +150,4 @@ https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/info?accessToken=
 
 ## 常见问题
 
-在ISSUE中可查看
+常见报错问题：https://github.com/lthero-big/YouthStudyAuto/issues/2#issuecomment-1500757348 
