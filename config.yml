@@ -1,18 +1,1 @@
 users: []
-URLs:
-  zj:
-    getToken_url: 'https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/login/we-chat/callback'
-    getUserInfo_url: 'https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/course/last-info'
-    getClass_url: 'https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/common-api/course/current'
-    checkin_url: 'https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/course/join'
-    getPersonalInfo_url: 'https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/info'
-    signin_url: 'https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/user-api/sign-in/records'
-  sh:
-    getToken_url: 'https://qcsh.h5yunban.com/youth-learning/cgi-bin/login/we-chat/callback'
-    getUserInfo_url: 'https://qcsh.h5yunban.com/youth-learning/cgi-bin/user-api/course/last-info'
-    getClass_url: 'https://qcsh.h5yunban.com/youth-learning/cgi-bin/common-api/course/current'
-    checkin_url: 'https://qcsh.h5yunban.com/youth-learning/cgi-bin/user-api/course/join'
-    getPersonalInfo_url: 'https://qcsh.h5yunban.com/youth-learning/cgi-bin/user-api/info'
-    signin_url: 'https://qcsh.h5yunban.com/youth-learning/cgi-bin/user-api/sign-in/records'
-
-
