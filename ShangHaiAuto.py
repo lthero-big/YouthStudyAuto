@@ -191,32 +191,13 @@ def get_screenshot_url():
         raise ValueError("Unexpected href format")
 
 if __name__ == "__main__":
-    config = getYmlConfig()
-    for index, eachuser in enumerate(config['users']):
-        print(eachuser['user']['name'], 'openId为 ', eachuser['user']['openid'])
-        openid = {
-            'appid': 'wx56b888a1409a2920',
-            'openid': eachuser['user']['openid']
-        }
-        accesstoken = getToken(openid)
-        checkindata = getinfo(accesstoken)
-        if checkindata is not None:
-            personalInfo=getPersonalInfo(accesstoken)
-            resStatus=signup(accesstoken, checkindata)
-            # 需要自行配置接口
-#             sendMail(eachuser,personalInfo,resStatus)
-            # 需要自行配置发送邮箱
-#             sendMail(eachuser['user']['mail'], "邮件标题", "邮件内容")
-        print('===========================================')
-
-if __name__ == "__main__":
     # 解析命令行参数
     parser = argparse.ArgumentParser(description="Youth Learning Automation")
     parser.add_argument('--daily', action='store_true', help="执行每日签到并发送邮件")
     parser.add_argument('--course', action='store_true', help="执行大学习打卡并发送邮件")
     parser.add_argument('--savePic', action='store_true', help="保存截图")
     args = parser.parse_args()
-    
+    print('===================任务开始========================')
     if args.savePic:
         screenshot_url = get_screenshot_url()
         screenshot_response = requests.get(screenshot_url)
@@ -232,6 +213,8 @@ if __name__ == "__main__":
         exit(1)
 
     config = getYmlConfig()
+    date = datetime.now().strftime("%Y-%m-%d")
+    print(f'================{date}======================')
     for index, eachuser in enumerate(config['users']):
         print(eachuser['user']['name'], 'openId为 ', eachuser['user']['openid'])
         openid = {
@@ -257,7 +240,8 @@ if __name__ == "__main__":
                     # 需要自行配置发送邮箱
                     #sendMail(eachuser, getPersonalInfo(accesstoken), resStatus, "course")
 
-        print('===========================================')
+        print('=================任务结束=========================')
         
         t = random.randint(1, 3)
         time.sleep(t)
+
