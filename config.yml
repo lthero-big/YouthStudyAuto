@@ -1,11 +1,3 @@
-users:
-  - user:
-      name: 'name1'
-      openid: 'oO-a2t6Z_awwxOby5Y9eO5VL9Rqg'
-      mail: 'aaaa@qq.com'
-  - user:
-      name: 'name2'
-      openid: 'oO-a2t7bkGObaacIOd4U1Bpaf1l0'
-      mail: 'bbbbb@qq.com'
+users[]
 
 
