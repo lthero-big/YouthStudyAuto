@@ -61,7 +61,10 @@ configure_daily_signin_time() {
         echo -e "${RED}输入非法，默认每日签到时间为上午10点。${NC}"
     fi
 
-    cron_job="0 $hour * * * cd $SCRIPT_DIR && python3 $SCRIPT_DIR/$PYTHON_SCRIPT --daily >> $SCRIPT_DIR/autoStudy.log 2>&1"
+    echo "请选择邮件发送方式（api、local 或留空为不发送）："
+    read mailType
+
+    cron_job="0 $hour * * * cd $SCRIPT_DIR && python3 $SCRIPT_DIR/$PYTHON_SCRIPT --daily --mailType $mailType >> $SCRIPT_DIR/autoStudy.log 2>&1"
 
     # 检查是否已经存在相同的任务
     (crontab -l 2>/dev/null | grep -F "$cron_job") && echo -e "${GREEN}每日签到任务已存在，不重复添加。${NC}" || (crontab -l 2>/dev/null; echo "$cron_job") | crontab -
@@ -88,7 +91,10 @@ configure_weekly_course_time() {
         echo -e "${RED}输入非法，默认打卡时间为上午10点。${NC}"
     fi
 
-    cron_job="0 $hour * * $day cd $SCRIPT_DIR && python3 $SCRIPT_DIR/$PYTHON_SCRIPT --course >> $SCRIPT_DIR/autoStudy.log 2>&1"
+    echo "请选择邮件发送方式（api、local 或留空为不发送）："
+    read mailType
+
+    cron_job="0 $hour * * $day cd $SCRIPT_DIR && python3 $SCRIPT_DIR/$PYTHON_SCRIPT --course --mailType $mailType >> $SCRIPT_DIR/autoStudy.log 2>&1"
 
     # 检查是否已经存在相同的任务
     (crontab -l 2>/dev/null | grep -F "$cron_job") && echo -e "${GREEN}每周大学习打卡任务已存在，不重复添加。${NC}" || (crontab -l 2>/dev/null; echo "$cron_job") | crontab -
@@ -171,6 +177,54 @@ delete_user() {
     fi
 }
 
+# 函数：修改邮件API URL和passwd
+modify_mail_api_url() {
+    echo "请输入新的邮件API URL："
+    read new_url
+    echo "请输入新的邮件API密码："
+    read new_passwd
+
+    if [ -f "$SCRIPT_DIR/config.yml" ]; then
+        yq eval ".mailApiUrl = \"$new_url\"" "$SCRIPT_DIR/config.yml" -i
+        yq eval ".mailApiPasswd = \"$new_passwd\"" "$SCRIPT_DIR/config.yml" -i
+        echo -e "${GREEN}邮件API URL和密码已更新。${NC}"
+    else
+        cat <<EOL > "$SCRIPT_DIR/config.yml"
+mailApiUrl: "$new_url"
+mailApiPasswd: "$new_passwd"
+EOL
+        echo -e "${GREEN}config.yml文件不存在，新建并设置邮件API URL和密码。${NC}"
+    fi
+}
+
+# 函数：修改本地邮件配置信息
+modify_mail_config() {
+    echo "请输入发信地址："
+    read email_from
+    echo "请输入密码："
+    read email_password
+    echo "请输入EMAIL_HOST："
+    read email_host
+    echo "请输入EMAIL_PORT："
+    read email_port
+
+    if [ -f "$SCRIPT_DIR/config.yml" ]; then
+        yq eval ".EMAIL_FROM = \"$email_from\"" "$SCRIPT_DIR/config.yml" -i
+        yq eval ".EMAIL_HOST_PASSWORD = \"$email_password\"" "$SCRIPT_DIR/config.yml" -i
+        yq eval ".EMAIL_HOST = \"$email_host\"" "$SCRIPT_DIR/config.yml" -i
+        yq eval ".EMAIL_PORT = $email_port" "$SCRIPT_DIR/config.yml" -i
+        echo -e "${GREEN}本地邮件配置信息已更新。${NC}"
+    else
+        cat <<EOL > "$SCRIPT_DIR/config.yml"
+EMAIL_FROM: "$email_from"
+EMAIL_HOST_PASSWORD: "$email_password"
+EMAIL_HOST: "$email_host"
+EMAIL_PORT: $email_port
+EOL
+        echo -e "${GREEN}config.yml文件不存在，新建并设置本地邮件配置信息。${NC}"
+    fi
+}
+
 # 主菜单
 show_menu() {
     echo "请选择一个选项："
@@ -182,7 +236,9 @@ show_menu() {
     echo "6. 查看config.yml文件"
     echo "7. 添加新用户"
     echo "8. 删除用户"
-    echo "9. 退出脚本"
+    echo "9. 修改邮件API URL和密码"
+    echo "10. 修改本地邮件配置信息"
+    echo "11. 退出脚本"
     read choice
 
     case $choice in
@@ -211,6 +267,12 @@ show_menu() {
             delete_user
             ;;
         9)
+            modify_mail_api_url
+            ;;
+        10)
+            modify_mail_config
+            ;;
+        11)
             echo "退出脚本。"
             exit 0
             ;;
