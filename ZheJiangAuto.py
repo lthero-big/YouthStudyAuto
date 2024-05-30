@@ -224,14 +224,18 @@ if __name__ == "__main__":
             if args.daily:
                 # 每日签到
                 resStatus = daily_sign_in(accesstoken)
-                sendMail(eachuser, getPersonalInfo(accesstoken), resStatus, "daily")
+                # 需要自行配置发送邮箱
+                #sendMail(eachuser, getPersonalInfo(accesstoken), resStatus, "daily")
+                # 需要自行配置接口
+                #sendMail(eachuser,personalInfo,resStatus)
 
             if args.course:
                 # 大学习打卡
                 checkindata = getinfo(accesstoken)
                 if checkindata:
                     resStatus = signup(accesstoken, checkindata)
-                    sendMail(eachuser, getPersonalInfo(accesstoken), resStatus, "course")
+                    # 需要自行配置发送邮箱
+                    #sendMail(eachuser, getPersonalInfo(accesstoken), resStatus, "course")
 
         print('===========================================')
         
