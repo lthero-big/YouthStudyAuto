@@ -52,10 +52,11 @@
 ### 运行代码
 
 - 需要自行安装 `re`, `json`, `yaml`, `requests`, `beautifulsoup4` 库
+- `pip install -r requirements.txt`
 - 获得openid后，将openid填入config.yml，运行index.py即可。
 - config.yml里面的name用来标识不同的openid，无实际意义
 
-### 新功能参数说明
+### 功能参数说明
 
 - `--daily`：执行每日签到并发送邮件
 - `--course`：执行大学习打卡并发送邮件
