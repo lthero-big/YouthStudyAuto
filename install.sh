@@ -94,6 +94,17 @@ save_weekly_screenshot() {
     echo -e "${GREEN}截图已保存到 $(readlink -f $SCRIPT_DIR/output.jpg)${NC}"
 }
 
+# 函数：更新项目
+update_project() {
+    if [ -d "$SCRIPT_DIR/.git" ]; then
+        cd $SCRIPT_DIR
+        git pull origin main
+        echo -e "${GREEN}项目已更新！${NC}"
+    else
+        echo -e "${RED}当前目录不是Git仓库，无法更新项目。${NC}"
+    fi
+}
+
 # 主菜单
 show_menu() {
     echo "请选择一个选项："
@@ -101,7 +112,8 @@ show_menu() {
     echo "2. 配置每日签到时间"
     echo "3. 配置每周大学习打卡时间"
     echo "4. 保存当前周的大学习截图"
-    echo "5. 退出脚本"
+    echo "5. 更新项目"
+    echo "6. 退出脚本"
     read choice
 
     case $choice in
@@ -118,6 +130,9 @@ show_menu() {
             save_weekly_screenshot
             ;;
         5)
+            update_project
+            ;;
+        6)
             echo "退出脚本。"
             exit 0
             ;;
