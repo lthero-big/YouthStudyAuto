@@ -1,20 +1,20 @@
 # 【浙江|上海】青年大学习一键打卡
 
-
 ## 特色
 
 - [x] 脚本一键运行，直接更新后台数据完成打卡 :tada:
 - [x] 支持为多人批量打卡 :thumbsup:
 - [x] 支持各平台服务器部署，可设置定时打卡任务 :heavy_check_mark:
 
-
 ## 更新内容
 
-2024.3.28更新： 感谢用户@b3nguang，新增功能：返回打卡完成的截屏图片的URL
+2024.3.28更新：感谢用户@b3nguang，新增功能：返回打卡完成的截屏图片的URL
+
+2024.5.30更新：新增功能：支持使用参数执行每日签到或大学习打卡，并保存截图
 
 **截止到2024.3.28，脚本依然可用**
 
-2023.3.12更新： 感谢吾爱用户：ahov 提供上海大学习接口，具体请查看[原帖](https://www.52pojie.cn/forum.php?mod=viewthread&tid=1694872&page=5#pid45902595)
+2023.3.12更新：感谢吾爱用户：ahov 提供上海大学习接口，具体请查看[原帖](https://www.52pojie.cn/forum.php?mod=viewthread&tid=1694872&page=5#pid45902595)
 
 目前已经添加上海青年大学习打卡脚本：ShangHaiAuto.py
 
@@ -52,9 +52,23 @@
 
 ### 运行代码
 
-- 需要自行安装re,json,ymal,requests库
+- 需要自行安装 `re`, `json`, `yaml`, `requests`, `beautifulsoup4` 库
 - 获得openid后，将openid填入config.yml，运行index.py即可。
 - config.yml里面的name用来标识不同的openid，无实际意义
+
+### 新功能参数说明
+
+- `--daily`：执行每日签到并发送邮件
+- `--course`：执行大学习打卡并发送邮件
+- `--savePic`：保存打卡完成的截图
+
+示例：
+```sh
+python3 index.py --daily --savePic
+python3 index.py --course --savePic
+python3 index.py --daily --course --savePic
+```
+
 
 ## 部署到服务器
 
@@ -83,41 +97,12 @@ unzip main.zip
 注意修改`/home/main/ZheJiangAuto.py`为实际文件路径
 
 ```sh
-30 15 * * 3  python /home/main/ZheJiangAuto.py >> /home/main/autosign.log 2>&1
+0 9 * * * python3 /home/lthero/codes/python/WeStudy/index.py --daily >> /home/lthero/autosign.log 2>&1
+0 10 * * 3,5 python3 /home/lthero/codes/python/WeStudy/index.py --course >> /home/lthero/autosign.log 2>&1
+
 ```
 
-每周三15点30分执行一次打卡任务，并且将打卡脚本输出的内容放在`/home/autosign.log`中
-
-#### 方法二
-
-先创建一个shell文件，如放在`/home/autosign.sh`，填写下面的内容
-
-注意：把`/home/main/ZheJiangAuto.py`修改成实际的项目路径，main目录下要有config.yml文件
-
-```sh
-#!/bin/bash
-PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
-export PATH
-python /home/main/ZheJiangAuto.py
-echo "----------------------------------------------------------------------------"
-endDate=`date +"%Y-%m-%d %H:%M:%S"`
-echo "[$endDate]"
-echo "----------------------------------------------------------------------------"
-```
-
-随后，给/home/autosign.sh添加执行权限
-
-```sh
-chmod +x /home/autosign.sh
-```
-
-使用输入命令`crontab -e`进行编辑定时任务，把下面这行添加到最后一行
-
-```sh
-30 15 * * 3  /home/autosign.sh >> /home/autosign.log 2>&1
-```
-
-每周三15点30分执行一次打卡任务，并且将打卡脚本输出的内容放在`/home/autosign.log`中
+每周三15点30分执行一次大学习打卡任务，每天9点执行签到任务，并且将打卡脚本输出的内容放在`/home/autosign.log`中
 
 
 
