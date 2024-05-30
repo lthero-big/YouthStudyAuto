@@ -51,9 +51,8 @@
 
 ### 运行代码
 
-- 需要自行安装 `re`, `json`, `yaml`, `requests`, `beautifulsoup4` 库
-- `pip install -r requirements.txt`
-- 获得openid后，将openid填入config.yml，运行index.py即可。
+- 需要自行安装 `re`, `json`, `yaml`, `requests`, `beautifulsoup4` 库，命令`pip install -r requirements.txt`
+- 获得**openid**后，将openid填入config.yml，运行index.py即可。
 - config.yml里面的name用来标识不同的openid，无实际意义
 
 ### 功能参数说明
@@ -62,7 +61,7 @@
 - `--course`：执行大学习打卡并发送邮件
 - `--savePic`：保存打卡完成的截图
 
-示例：
+**运行示例**：
 ```sh
 python3 index.py --daily --savePic
 python3 index.py --course --savePic
@@ -90,7 +89,7 @@ unzip main.zip
 
 > 填写好config.yml后，使用`crontab`命令，设置定时执行的任务
 
-#### 方法一
+#### 方法
 
 使用输入命令`crontab -e`进行编辑定时任务，把下面这行添加到最后一行
 
