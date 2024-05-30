@@ -100,11 +100,11 @@ unzip main.zip
 
 使用输入命令`crontab -e`进行编辑定时任务，把下面这行添加到最后一行
 
-注意修改`/home/main/ZheJiangAuto.py`为实际文件路径
+注意修改`/home/main/ZheJiangAuto.py`为**实际文件路径**
 
 ```sh
-0 9 * * * python3 /home/lthero/codes/python/WeStudy/index.py --daily >> /home/lthero/autosign.log 2>&1
-0 10 * * 3,5 python3 /home/lthero/codes/python/WeStudy/index.py --course >> /home/lthero/autosign.log 2>&1
+0 9 * * * python3 /home/main/ZheJiangAuto.py --daily >> /home/lthero/autosign.log 2>&1
+0 10 * * 3,5 python3 /home/main/ZheJiangAuto.py --course >> /home/lthero/autosign.log 2>&1
 
 ```
 
