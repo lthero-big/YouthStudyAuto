@@ -152,7 +152,7 @@ add_user() {
         if [ "$user_count" -eq 0 ]; then
             echo -e "users:\n$new_user" > "$SCRIPT_DIR/config.yml"
         else
-            echo -e "$new_user" >> "$SCRIPT_DIR/config.yml"
+            yq eval ".users += {\"user\": {\"name\": \"$username\", \"openid\": \"$openid\", \"mail\": \"$email\"}}" -i "$SCRIPT_DIR/config.yml"
         fi
         echo -e "${GREEN}新用户已添加到config.yml。${NC}"
     else
@@ -169,7 +169,7 @@ delete_user() {
     if [ -f "$SCRIPT_DIR/config.yml" ]; then
         yq eval "del(.users[] | select(.user.name == \"$username\"))" "$SCRIPT_DIR/config.yml" -i
         if [ "$(yq eval '.users | length' "$SCRIPT_DIR/config.yml")" -eq 0 ]; then
-            yq eval '.users = []' "$SCRIPT_DIR/config.yml" -i
+            yq eval 'del(.users)' "$SCRIPT_DIR/config.yml" -i
         fi
         echo -e "${GREEN}用户已从config.yml删除。${NC}"
     else
