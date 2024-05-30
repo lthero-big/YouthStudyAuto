@@ -64,8 +64,14 @@
 
 **运行示例**：
 ```sh
-python3 index.py --daily --savePic
+
+# 每日签到
+python3 index.py --daily
+# 仅保存截图
+python3 index.py --savePic
+# 大学习打卡并保存截图
 python3 index.py --course --savePic
+# 全部执行
 python3 index.py --daily --course --savePic
 ```
 
