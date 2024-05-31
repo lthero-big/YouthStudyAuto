@@ -63,7 +63,7 @@ cd YouthStudyAuto
 
 ### 方法二
 ```sh
-wget https://github.com/lthero-big/ZheJiangYouthstudyAutoSign/archive/refs/heads/main.zip
+wget https://github.com/lthero-big/YouthStudyAuto/archive/refs/heads/main.zip
 ```
 解压文件
 ```
