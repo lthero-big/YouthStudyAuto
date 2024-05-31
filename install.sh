@@ -125,12 +125,14 @@ run_task() {
     else
         task_type="--course"
     fi
-    echo "请选择邮件发送方式（api、local 或留空为不发送）："
+    echo "请选择邮件发送方式（a 表示 api、l 表示 local 或留空为不发送）："
     read mailType
-    if [[ "$mailType" == "a" ]]; then
+    if [[ "$mailType" == "l" ]]; then
+        mailType="local"
+    elif [[ "$mailType" == "a" ]]; then
         mailType="api"
     else
-        mailType="local"
+        mailType=""
     fi
     if [[ -n "$mailType" ]]; then
         cd $SCRIPT_DIR && python3 $SCRIPT_DIR/$PYTHON_SCRIPT $task_type --mailType $mailType
