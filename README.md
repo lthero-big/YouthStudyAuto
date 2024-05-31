@@ -98,8 +98,8 @@ users:
 
 ### 功能参数说明
 
-- `--daily`：执行每日签到并发送邮件
-- `--course`：执行大学习打卡并发送邮件
+- `--daily`：执行每日签到
+- `--course`：执行大学习打卡
 - `--savePic`：保存打卡完成的截图
 
 **运行示例**：
@@ -107,6 +107,10 @@ users:
 
 # 每日签到
 python3 index.py --daily
+# 每日签到并用api方式发送邮件
+python3 index.py --daily --mailType api
+# 每日签到并用本地邮箱配置方式发送邮件
+python3 index.py --daily --mailType local
 # 仅保存截图
 python3 index.py --savePic
 # 大学习打卡并保存截图
@@ -115,22 +119,6 @@ python3 index.py --course --savePic
 python3 index.py --daily --course --savePic
 ```
 
-
-## 部署到服务器
-
-在服务器下载项目文件
-
-```sh
-wget https://github.com/lthero-big/ZheJiangYouthstudyAutoSign/archive/refs/heads/main.zip
-```
-
-解压文件
-
-```
-unzip main.zip
-```
-
-随后，使用vim或其它工具，填写好config.yml的信息
 
 ### 设置定时任务
 
@@ -154,7 +142,7 @@ unzip main.zip
 
 ## 邮件发送功能
 
-- 在config.yml配置好接收方邮箱
+- 在config.yml配置好接收方邮箱**（建议使用install.sh进行配置）**
 - 有两个sendMail函数，第一个是使用发送邮件的api，第二个是使用python库发送，没有api的可以使用第二个函数
 - 在第二个sendMail中设置发送方邮箱信息【需要自行搜索“用QQ的SMTP发送邮件配置”】
 
