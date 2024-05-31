@@ -101,7 +101,7 @@ users:
 - `--daily`：执行每日签到
 - `--course`：执行大学习打卡
 - `--savePic`：保存打卡完成的截图
-- `--mailType`：发送邮件，参数：  api  或  local
+- `--mailType`：发送邮件，参数：  `api`  或  `local`
 
 **运行示例**：
 ```sh
