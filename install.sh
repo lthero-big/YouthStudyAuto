@@ -64,7 +64,11 @@ configure_daily_signin_time() {
     echo "请选择邮件发送方式（api、local 或留空为不发送）："
     read mailType
 
-    cron_job="0 $hour * * * cd $SCRIPT_DIR && python3 $SCRIPT_DIR/$PYTHON_SCRIPT --daily --mailType $mailType >> $SCRIPT_DIR/autoStudy.log 2>&1"
+    if [[ -n "$mailType" ]]; then
+        cron_job="0 $hour * * * cd $SCRIPT_DIR && python3 $SCRIPT_DIR/$PYTHON_SCRIPT --daily --mailType $mailType >> $SCRIPT_DIR/autoStudy.log 2>&1"
+    else
+        cron_job="0 $hour * * * cd $SCRIPT_DIR && python3 $SCRIPT_DIR/$PYTHON_SCRIPT --daily >> $SCRIPT_DIR/autoStudy.log 2>&1"
+    fi
 
     # 检查是否已经存在相同的任务
     (crontab -l 2>/dev/null | grep -F "$cron_job") && echo -e "${GREEN}每日签到任务已存在，不重复添加。${NC}" || (crontab -l 2>/dev/null; echo "$cron_job") | crontab -
@@ -94,12 +98,43 @@ configure_weekly_course_time() {
     echo "请选择邮件发送方式（api、local 或留空为不发送）："
     read mailType
 
-    cron_job="0 $hour * * $day cd $SCRIPT_DIR && python3 $SCRIPT_DIR/$PYTHON_SCRIPT --course --mailType $mailType >> $SCRIPT_DIR/autoStudy.log 2>&1"
+    if [[ -n "$mailType" ]]; then
+        cron_job="0 $hour * * $day cd $SCRIPT_DIR && python3 $SCRIPT_DIR/$PYTHON_SCRIPT --course --mailType $mailType >> $SCRIPT_DIR/autoStudy.log 2>&1"
+    else
+        cron_job="0 $hour * * $day cd $SCRIPT_DIR && python3 $SCRIPT_DIR/$PYTHON_SCRIPT --course >> $SCRIPT_DIR/autoStudy.log 2>&1"
+    fi
 
     # 检查是否已经存在相同的任务
     (crontab -l 2>/dev/null | grep -F "$cron_job") && echo -e "${GREEN}每周大学习打卡任务已存在，不重复添加。${NC}" || (crontab -l 2>/dev/null; echo "$cron_job") | crontab -
     echo -e "${GREEN}每周大学习打卡任务已配置，日志保存在 $SCRIPT_DIR/autoStudy.log${NC}"
 }
+
+# 函数：执行一次打卡或签到任务
+run_task() {
+    echo "请输入地区（zj 或 sh），默认为 zj："
+    read region
+    if [[ "$region" == "sh" ]]; then
+        PYTHON_SCRIPT="ShangHaiAuto.py"
+    else
+        PYTHON_SCRIPT="ZheJiangAuto.py"
+    fi
+    echo "请输入任务类型（d 表示 daily，c 表示 course），默认为 course："
+    read task_type
+    if [[ "$task_type" == "d" ]]; then
+        task_type="--daily"
+    else
+        task_type="--course"
+    fi
+    echo "请选择邮件发送方式（api、local 或留空为不发送）："
+    read mailType
+
+    if [[ -n "$mailType" ]]; then
+        cd $SCRIPT_DIR && python3 $SCRIPT_DIR/$PYTHON_SCRIPT $task_type --mailType $mailType
+    else
+        cd $SCRIPT_DIR && python3 $SCRIPT_DIR/$PYTHON_SCRIPT $task_type
+    fi
+}
+
 
 # 函数：保存当前周的大学习截图
 save_weekly_screenshot() {
@@ -136,6 +171,17 @@ view_config() {
     fi
 }
 
+# 函数：查看当前配置的打卡时间和每日签到时间
+view_cron_jobs() {
+    echo -e "${GREEN}当前配置的打卡时间和每日签到时间：${NC}"
+    cron_jobs=$(crontab -l 2>/dev/null | grep "$SCRIPT_DIR/$PYTHON_SCRIPT")
+    if [ -z "$cron_jobs" ]; then
+        echo -e "${RED}未配置任何打卡或签到任务。${NC}"
+    else
+        echo "$cron_jobs"
+    fi
+}
+
 # 函数：添加新用户到config.yml
 add_user() {
     echo "请输入用户名："
@@ -145,18 +191,17 @@ add_user() {
     echo "请输入邮箱："
     read email
 
-    new_user="  - user:\n      name: '$username'\n      openid: '$openid'\n      mail: '$email'"
-
     if [ -f "$SCRIPT_DIR/config.yml" ]; then
-        user_count=$(yq eval '.users | length' "$SCRIPT_DIR/config.yml")
-        if [ "$user_count" -eq 0 ]; then
-            echo -e "users:\n$new_user" > "$SCRIPT_DIR/config.yml"
-        else
-            yq eval ".users += {\"user\": {\"name\": \"$username\", \"openid\": \"$openid\", \"mail\": \"$email\"}}" -i "$SCRIPT_DIR/config.yml"
-        fi
+        yq eval ".users += [{\"user\": {\"name\": \"$username\", \"openid\": \"$openid\", \"mail\": \"$email\"}}]" -i "$SCRIPT_DIR/config.yml"
         echo -e "${GREEN}新用户已添加到config.yml。${NC}"
     else
-        echo -e "users:\n$new_user" > "$SCRIPT_DIR/config.yml"
+        cat <<EOL > "$SCRIPT_DIR/config.yml"
+users:
+  - user:
+      name: '$username'
+      openid: '$openid'
+      mail: '$email'
+EOL
         echo -e "${GREEN}config.yml文件不存在，新建并添加用户。${NC}"
     fi
 }
@@ -176,6 +221,8 @@ delete_user() {
         echo -e "${RED}config.yml文件不存在。${NC}"
     fi
 }
+
+
 
 # 函数：修改邮件API URL和passwd
 modify_mail_api_url() {
@@ -229,16 +276,18 @@ EOL
 show_menu() {
     echo "请选择一个选项："
     echo "1. 开始安装"
-    echo "2. 配置每日签到时间"
-    echo "3. 配置每周大学习打卡时间"
-    echo "4. 保存当前周的大学习截图"
-    echo "5. 更新项目"
-    echo "6. 查看config.yml文件"
-    echo "7. 添加新用户"
-    echo "8. 删除用户"
-    echo "9. 修改邮件API URL和密码"
-    echo "10. 修改本地邮件配置信息"
-    echo "11. 退出脚本"
+    echo "2. 查看当前配置的打卡时间和每日签到时间"
+    echo "3. 配置每日签到时间"
+    echo "4. 配置每周大学习打卡时间"
+    echo "5. 执行一次打卡或签到任务"
+    echo "6. 保存当前周的大学习截图"
+    echo "7. 查看config.yml文件"
+    echo "8. 添加新用户"
+    echo "9. 删除用户"
+    echo "10. 修改邮件API URL和密码"
+    echo "11. 修改本地邮件配置信息"
+    echo "12. 更新项目"
+    echo "13. 退出脚本"
     read choice
 
     case $choice in
@@ -246,33 +295,39 @@ show_menu() {
             install_dependencies
             ;;
         2)
-            configure_daily_signin_time
+            view_cron_jobs
             ;;
         3)
-            configure_weekly_course_time
+            configure_daily_signin_time
             ;;
         4)
-            save_weekly_screenshot
+            configure_weekly_course_time
             ;;
         5)
-            check_for_updates
+            run_task
             ;;
         6)
-            view_config
+            save_weekly_screenshot
             ;;
         7)
-            add_user
+            view_config
             ;;
         8)
-            delete_user
+            add_user
             ;;
         9)
-            modify_mail_api_url
+            delete_user
             ;;
         10)
-            modify_mail_config
+            modify_mail_api_url
             ;;
         11)
+            modify_mail_config
+            ;;
+        12)
+            check_for_updates
+            ;;
+        13)
             echo "退出脚本。"
             exit 0
             ;;
@@ -281,6 +336,7 @@ show_menu() {
             ;;
     esac
 }
+
 
 # 循环显示菜单，直到用户选择退出
 while true; do
