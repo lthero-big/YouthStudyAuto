@@ -71,8 +71,8 @@ unzip main.zip
 cd YouthStudyAuto-main
 ```
 
-## 自动运行
-使用install.sh脚本，自动安装所需环境，支持对用户添加、查看、删除，并且支持配置打卡时间和签到时间（同步到crontab任务）
+## 自动运行（推荐）
+使用install.sh脚本，自动安装所需环境，支持对用户添加、查看、删除；配置打卡时间和签到时间（同步到crontab任务）；配置邮件发送api等
 
 ```sh
 bash install.sh
