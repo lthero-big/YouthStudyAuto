@@ -52,8 +52,16 @@
 
 # 运行代码
 
-下载本项目
-### 方法一
+## 下载本项目
+
+### 方法一(推荐，可自动更新)
+```sh
+git clone https://github.com/lthero-big/YouthStudyAuto.git
+cd YouthStudyAuto
+```
+
+
+### 方法二
 ```sh
 wget https://github.com/lthero-big/ZheJiangYouthstudyAutoSign/archive/refs/heads/main.zip
 ```
@@ -62,13 +70,6 @@ wget https://github.com/lthero-big/ZheJiangYouthstudyAutoSign/archive/refs/heads
 unzip main.zip
 cd YouthStudyAuto-main
 ```
-
-### 方法二
-```sh
-git clone https://github.com/lthero-big/YouthStudyAuto.git
-cd YouthStudyAuto
-```
-
 
 ## 自动运行
 使用install.sh脚本，自动安装所需环境，支持对用户添加、查看、删除，并且支持配置打卡时间和签到时间（同步到crontab任务）
