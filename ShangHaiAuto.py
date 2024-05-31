@@ -121,11 +121,11 @@ def getPersonalInfo(accessToken):
 # 通过API发送邮件
 def sendMailApi(user, info, resStatus, task_type):
     task_message = "每日签到" if task_type == "daily" else "本周大学习"
-    msg = "完成" if resStatus == 1 else "未完成"
+    msg = "完成" if resStatus == 1 else resStatus
     # 接收方
     receiver = user['user']['mail']
     # 内容
-    content = '{updateTime} 您好，{user}! {task_message}完成：{msg}。当前分数为{score}分'.format(
+    content = '{updateTime} 您好，{user}! {task_message}状态：{msg}。当前分数为{score}分'.format(
         user=info['nickname'],
         task_message=task_message,
         msg=msg,
@@ -146,11 +146,11 @@ def sendMailApi(user, info, resStatus, task_type):
 # 本地发送邮件
 def sendMailLocal(user, info, resStatus, task_type):
     task_message = "每日签到" if task_type == "daily" else "本周大学习"
-    msg = "完成" if resStatus == 1 else "未完成"
+    msg = "完成" if resStatus == 1 else resStatus
     # 接收方
     to_email = user['user']['mail']
     # 内容
-    content = '{updateTime} 您好，{user}! {task_message}完成：{msg}。当前分数为{score}分'.format(
+    content = '{updateTime} 您好，{user}! {task_message}状态：{msg}。当前分数为{score}分'.format(
         user=info['nickname'],
         task_message=task_message,
         msg=msg,
