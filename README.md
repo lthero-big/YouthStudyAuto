@@ -60,8 +60,7 @@ wget https://github.com/lthero-big/ZheJiangYouthstudyAutoSign/archive/refs/heads
 解压文件
 ```
 unzip main.zip
-mv main YouthStudyAuto
-cd YouthStudyAuto
+cd YouthStudyAuto-main
 ```
 
 ### 方法二
