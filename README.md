@@ -33,7 +33,7 @@
 
 视频教程：https://wwd.lanzouy.com/isVnb0cc5jba 密码:bcg5
 
-- 需要的软件：Fiddler [点击下载Fiddler](https://download.informer.com/win-1191997911-4004b638-614e06cc-07ada6a98fb9eae13-adb2284be2034d9c9-2076861186-1191989686/fiddler4setup.exe)、电脑版微信
+- 需要的软件：Fiddler [点击下载Fiddler](https://fiddler2.software.informer.com/4.6/)、电脑版微信
 - 打开Fiddler，安装证书
 - 切换到微信，点击大学习，此时弹窗需要授权，点击“同意”。
 - 点击“同意”后，切换到Fiddler，按“ctrl+f”，搜索openid，双击标黄处的包，并点击“WebForms”，在里面找到openid即可
